@@ -21,8 +21,12 @@ public class Comment {
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
+    public Comment() {
+    }
+
     @PrePersist
-    protected void onCreate() {
+    protected void onCreate()
+    {
         this.createdDate = LocalDateTime.now();
     }
 }

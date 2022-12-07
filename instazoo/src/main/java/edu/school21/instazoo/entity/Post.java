@@ -18,8 +18,8 @@ public class Post {
     private String title;
     private String caption;
     private String location;
-
     private Integer likes;
+
     @Column
     @ElementCollection(targetClass = String.class)
     private Set<String> likedUsers = new HashSet<>();
@@ -30,8 +30,12 @@ public class Post {
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
+    public Post() {
+    }
+
     @PrePersist
-    protected void onCreate() {
+    protected void onCreate()
+    {
         this.createdDate = LocalDateTime.now();
     }
 

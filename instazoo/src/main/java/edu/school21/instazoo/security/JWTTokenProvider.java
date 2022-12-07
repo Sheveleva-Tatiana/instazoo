@@ -18,7 +18,7 @@ public class JWTTokenProvider {
     public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
-        Date expireDate = new Date(now.getTime() + SecurityConstans.EXPIRATION_TIME);
+        Date expireDate = new Date(now.getTime() + SecurityConstants.EXPIRATION_TIME);
 
         String userId = Long.toString(user.getId());
         Map<String, Object> claimsMap = new HashMap<>();
@@ -31,14 +31,14 @@ public class JWTTokenProvider {
                 .addClaims(claimsMap)
                 .setIssuedAt(now)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.ES512, SecurityConstans.SECRET)
+                .signWith(SignatureAlgorithm.ES512, SecurityConstants.SECRET)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(SecurityConstans.SECRET)
+                    .setSigningKey(SecurityConstants.SECRET)
                     .parseClaimsJws(token);
             return true;
         } catch (SignatureException |
@@ -53,7 +53,7 @@ public class JWTTokenProvider {
 
     public Long getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SecurityConstans.SECRET)
+                .setSigningKey(SecurityConstants.SECRET)
                 .parseClaimsJws(token)
                 .getBody();
         String id = (String) claims.get("id");

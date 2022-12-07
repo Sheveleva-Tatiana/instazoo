@@ -8,8 +8,11 @@ import edu.school21.instazoo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 public class UserService {
@@ -32,12 +35,14 @@ public class UserService {
         user.setUsername(userIn.getUsername());
         user.setPassword(passwordEncoder.encode(userIn.getPassword()));
         user.getRoles().add(ERole.ROLE_USER);
+
         try {
-            LOG.info("Saving USER {}", userIn.getEmail());
+            LOG.info("Saving User {}", userIn.getEmail());
             return userRepository.save(user);
         } catch (Exception e) {
             LOG.error("Error during registration. {}", e.getMessage());
-            throw new UserExistException("The user " + user.getUsername() + " already exist. Please, check credentials");
+            throw new UserExistException("The user " + user.getUsername() + " already exist. Please check credentials");
         }
     }
+
 }

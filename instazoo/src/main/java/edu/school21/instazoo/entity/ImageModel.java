@@ -12,11 +12,14 @@ public class ImageModel {
     private Long id;
     @Column(nullable = false)
     private String name;
-//    @Lob
-//    @Column(columnDefinition = "LONGBLOB")
-//    private byte[] imageBytes;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] imageBytes;
     @JsonIgnore
     private Long userId;
     @JsonIgnore
     private Long postId;
+
+    public ImageModel() {
+    }
 }
